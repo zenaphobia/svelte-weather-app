@@ -165,7 +165,7 @@
                     <button class="box-border rounded hover:rounded-lg hover:bg-slate-100 bg-slate-400 text-slate-700 px-4" on:click={()=>{resetForm()}}>Reset</button>
                 </div>
                 <input class="drac-input drac-input-white drac-text-white" type="value" bind:value={input} on:input={()=>{getCityFromAPI()}} name="" id="">
-                <div class="drac-box list-component drac-bg-grey-secondary max-h-0 focus:max-h-64 border-radius" style={filteredCities ? "max-height: 250px" : "max-height: 0px"}>
+                <div class="drac-box list-component drac-bg-grey-secondary border-radius" style={filteredCities ? "max-height: 250px" : "max-height: 0px"}>
                     <ul class="drac-list list">
                         {#if filteredCities}
                             {#each filteredCities as city, i}
