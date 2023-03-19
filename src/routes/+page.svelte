@@ -1,23 +1,36 @@
 <script lang="ts">
-    // import { City, type ICity } from 'country-state-city'
-    import type { ICity } from 'country-state-city'
 
-    const allStates = undefined //City.getCitiesOfCountry('US')
-    let data:Promise<JSON | undefined> | JSON | undefined
-    let selectedCity:ICity | undefined
-    let input:string = ""
-    let filteredCities: ICity[] | undefined
+    // import { City, type ICity } from 'country-state-city'
+    // import type { ICity } from 'country-state-city'
+
+    let data:Promise<JSON | undefined | JSON[]> | JSON[] | undefined
+    let selectedCity:JSON[] | undefined
+    let input:string
+    let filteredCities: JSON[] | undefined
 
     //Getting a six day forecast
-    $: forecast = undefined //data?.daily.time.splice(1)
+    $: forecast = data?.daily.time.splice(1)
 
+    $: cities = undefined
     $: selectedCity = undefined
-    $: filteredCities =  input ? allStates?.filter(p => p.name.toLowerCase().includes(input.toLowerCase())).slice(0, filteredCities?.length - (filteredCities?.length - 20)) : undefined
+    // $: filteredCities =  input ? allStates?.filter(p => p.name.toLowerCase().includes(input.toLowerCase())).slice(0, filteredCities?.length - (filteredCities?.length - 20)) : undefined
+    $: filteredCities = input ? cities?.results : undefined
 
-    async function handleClick(_city:ICity) {
+    async function handleClick(_city:JSON[]) {
         selectedCity = _city
-        input = _city.name + ',' + ' ' + _city.stateCode
+        input = _city.name + ',' + ' ' + _city.admin1
         data = await getWeather(selectedCity)
+    }
+
+    async function getCityFromAPI(){
+        let params = input
+        let _data
+        let _url = `https://geocoding-api.open-meteo.com/v1/search?name=${params}`
+        const _response = await fetch(_url)
+        if(_response.ok){
+            _data = await _response.json()
+            cities = _data
+        }
     }
 
     function getWeekdayText(data:string){
@@ -27,11 +40,10 @@
         return _data;
     }
 
-    async function getWeather(params:ICity):Promise<JSON | undefined>{
+    async function getWeather(params:JSON[]):Promise<JSON[] | undefined>{
         const long = params.longitude
         const lat = params.latitude
         const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&daily=weathercode&daily=temperature_2m_max,temperature_2m_min&current_weather=true&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch&timezone=America%2FLos_Angeles`
-        console.log(url)
         const response = await fetch(url)
         let _data = undefined
 
@@ -152,12 +164,12 @@
                     <p class="text text-gray-600 pr-2" style={input ? "opacity: .5" : "opacity: 1"}>Input city name</p>
                     <button class="box-border rounded hover:rounded-lg hover:bg-slate-100 bg-slate-400 text-slate-700 px-4" on:click={()=>{resetForm()}}>Reset</button>
                 </div>
-                <input class="drac-input drac-input-white drac-text-white" type="value" bind:value={input} name="" id="">
-                <div class="drac-box list-component drac-bg-grey-secondary border-radius" style={filteredCities ? "max-height: 250px" : "max-height: 0px"}>
+                <input class="drac-input drac-input-white drac-text-white" type="value" bind:value={input} on:input={()=>{getCityFromAPI()}} name="" id="">
+                <div class="drac-box list-component drac-bg-grey-secondary max-h-0 focus:max-h-64 border-radius" style={filteredCities ? "max-height: 250px" : "max-height: 0px"}>
                     <ul class="drac-list list">
                         {#if filteredCities}
                             {#each filteredCities as city, i}
-                                <li on:click={()=>{handleClick(city)}} on:keypress={()=>{handleClick(city)}} class="drac-text drac-text-white drac-my-xs list hover:bg-violet-500" value={city}> {city.name} <span class="font-bold text-white">[{city.stateCode}]</span></li>
+                                <li on:click={()=>{handleClick(city)}} on:keypress={()=>{handleClick(city)}} class="drac-text drac-text-white drac-my-xs list hover:bg-violet-500" value={city}> {city.name} <span class="font-bold text-white">[{city.admin1}]</span></li>
                             {/each}
                         {/if}
                     </ul>
@@ -198,7 +210,6 @@
         </div>
     </div>
 </div>
-
 
 <style>
     * {
