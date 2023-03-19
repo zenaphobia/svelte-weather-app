@@ -1,14 +1,15 @@
 <script lang="ts">
-    import { City, type ICity } from 'country-state-city'
+    // import { City, type ICity } from 'country-state-city'
+    import type { ICity } from 'country-state-city'
 
-    const allStates = City.getCitiesOfCountry('US')
+    const allStates = undefined //City.getCitiesOfCountry('US')
     let data:Promise<JSON | undefined> | JSON | undefined
     let selectedCity:ICity | undefined
     let input:string = ""
     let filteredCities: ICity[] | undefined
 
     //Getting a six day forecast
-    $: forecast = data?.daily.time.splice(1)
+    $: forecast = undefined //data?.daily.time.splice(1)
 
     $: selectedCity = undefined
     $: filteredCities =  input ? allStates?.filter(p => p.name.toLowerCase().includes(input.toLowerCase())).slice(0, filteredCities?.length - (filteredCities?.length - 20)) : undefined
