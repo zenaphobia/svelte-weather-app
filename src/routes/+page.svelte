@@ -21,7 +21,7 @@
 
     function getWeekdayText(data:string){
         let _data
-        let _input = data
+        let _input = data + 'T22:00';
         _data = new Date(_input).toLocaleDateString("en-US",{weekday:'long', timeZone:'America/Los_Angeles'})
         return _data;
     }
