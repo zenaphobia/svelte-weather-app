@@ -11,7 +11,7 @@
     $: forecast = data?.daily.time.splice(1)
 
     $: selectedCity = undefined
-    $: filteredCities = undefined //input ? allStates?.filter(p => p.name.toLowerCase().includes(input.toLowerCase())).slice(0, filteredCities?.length - (filteredCities?.length - 20)) : undefined
+    $: filteredCities =  input ? allStates?.filter(p => p.name.toLowerCase().includes(input.toLowerCase())).slice(0, filteredCities?.length - (filteredCities?.length - 20)) : undefined
 
     async function handleClick(_city:ICity) {
         selectedCity = _city

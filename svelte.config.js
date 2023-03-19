@@ -1,4 +1,5 @@
 import adapter from '@sveltejs/adapter-netlify';
+import { vitePreprocess } from '@sveltejs/kit/vite';
 import preprocess from 'svelte-preprocess';
 
 // import { vitePreprocess } from '@sveltejs/kit/vite';
@@ -17,5 +18,5 @@ export default {
       split: false,
     }),
   },
-  preprocess: preprocess()
+  preprocess: vitePreprocess()
 };
