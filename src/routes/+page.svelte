@@ -166,7 +166,7 @@
                     <button class="box-border rounded hover:rounded-lg hover:bg-slate-100 bg-slate-400 text-slate-700 px-4" on:click={()=>{resetForm()}}>Reset</button>
                 </div>
                 <input class="drac-input drac-input-white drac-text-white" type="value" bind:value={input} on:input={()=>{getCityFromAPI()}} name="" id="">
-                <div class="drac-box list-component drac-bg-grey-secondary border-radius" style={filteredCities ? "max-height: 250px" : "max-height: 0px"}>
+                <div class="drac-box list-component drac-bg-grey-secondary border-radius" style={filteredCities ? "height: 250px" : "height: 0px"}>
                     <ul class="drac-list list">
                         {#if filteredCities}
                             {#each filteredCities as city}
@@ -180,11 +180,11 @@
         </div>
         <div class="box-border flex justify-center lg:justify-around flex-col lg:flex-row columns-1 lg:columns-2 content-center items-stretch">
             {#if data}
-                <div class=" bg-gradient-to-br from-indigo-500 mb-2 lg:m-4 box-border flex flex-col overflow-hidden fade-in justify-center items-center w-full lg:w-1/2 rounded-lg">
+                <div class="bg-gradient-to-br from-indigo-500 mb-2 lg:m-4 box-border flex flex-col overflow-hidden fade-in justify-center items-center w-full lg:w-1/2 rounded-lg">
                     <div>
-                        <h3 class="text-slate-400">Today</h3>
+                        <h3 class="text-white font-bold py-4 lg:p-0">Today</h3>
                     </div>
-                    <div class="flex flex-row">
+                    <div class="flex flex-row items-center">
                         <div class="shrink-1 p-4">
                             <img src={getWeatherCode(data.current_weather.weathercode)} alt={getWeatherText(data.current_weather.weathercode)}>
                         </div>
@@ -202,8 +202,8 @@
                                 <img class="w-12" src={getWeatherCode(data.daily.weathercode[i])} alt="">
                             </div>
                             <p class="text-white text-center">{getWeatherText(data.daily.weathercode[i])}</p>
-                            <p class="text-slate-400">L: {data.daily.temperature_2m_min[i]}<span class="text-slate-500"> °F</span></p>
                             <p class="text-slate-400">H: {data.daily.temperature_2m_max[i]}<span class="text-slate-500"> °F</span></p>
+                            <p class="text-slate-400">L: {data.daily.temperature_2m_min[i]}<span class="text-slate-500"> °F</span></p>
                         </div>
                     {/each}
                 </div>
