@@ -19,6 +19,7 @@
     async function handleClick(_city:JSON[]) {
         selectedCity = _city
         input = _city.name + ',' + ' ' + _city.admin1
+        cities = getCityFromAPI(input)
         data = await getWeather(selectedCity)
     }
 
@@ -154,7 +155,7 @@
 
 </script>
 
-<div class="drac-box container-full mx-auto drac-p-lg">
+<div class="drac-box container-full p-6 lg:p-10">
     <div class="drac-box drac-card max-w-7xl mx-auto drac-card-subtle drac-border-purple drac-p-md drac-m-md drac-p-sm" data-variant="subtle">
         <h1 class="drac-heading font-bold drac-heading-2xl drac-text-white">Quick Weather</h1>
         <p class="drac-text drac-line-height text-gray-400">Enter your city and get a quick 5 day forecast</p>
@@ -168,7 +169,7 @@
                 <div class="drac-box list-component drac-bg-grey-secondary border-radius" style={filteredCities ? "max-height: 250px" : "max-height: 0px"}>
                     <ul class="drac-list list">
                         {#if filteredCities}
-                            {#each filteredCities as city, i}
+                            {#each filteredCities as city}
                                 <li on:click={()=>{handleClick(city)}} on:keypress={()=>{handleClick(city)}} class="drac-text drac-text-white drac-my-xs list hover:bg-violet-500" value={city}> {city.name} <span class="font-bold text-white">[{city.admin1}]</span></li>
                             {/each}
                         {/if}
