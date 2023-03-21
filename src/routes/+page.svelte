@@ -178,7 +178,7 @@
             </div>
             <!-- <button class="drac-btn drac-my-sm drac-bg-white drac-text-black">See Data</button> -->
         </div>
-        <div class="box-border flex justify-center md:justify-around flex-col md:flex-row columns-1 lg:columns-2 content-center items-stretch">
+        <div class="box-border flex justify-center lg:justify-around flex-col lg:flex-row columns-1 lg:columns-2 content-center items-stretch">
             {#if data}
                 <div class=" bg-gradient-to-br from-indigo-500 mb-2 lg:m-4 box-border flex flex-col overflow-hidden fade-in justify-center items-center w-full lg:w-1/2 rounded-lg">
                     <div>
